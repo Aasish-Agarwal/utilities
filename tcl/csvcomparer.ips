@@ -1,0 +1,100 @@
+## csvcomparer.ips
+## A tool to compare two lines of CSV data, field by field. 
+## It reads a text file containing exactly 2 lines of CSV data
+## It also handles the cases when there are comma in csv data itself within ""
+
+
+## Tool: dplayer ver 300 and above
+
+#######################################################################
+## Library Procedures
+
+proc splitCSVDataWithCommas { line } {
+	set splitted [list]
+	set lfldstarted false
+	set fldval [list]
+	foreach var [split $line ,] {
+		
+		if {  [regexp {"} $var] } { 
+			regsub -all "\"" $var "" var
+
+			if { $lfldstarted } {
+				
+				lappend fldval  $var 
+				set lfldstarted false
+				lappend splitted [join $fldval #]
+				set fldval [list]
+			} else {
+				
+				lappend fldval  $var 
+				set lfldstarted true
+			}
+		} else {
+			if { $lfldstarted } {
+				
+				lappend fldval  $var 
+			} else {
+				
+				lappend splitted $var
+			}
+		}
+	}
+	return [join $splitted ,]
+}
+
+proc compareCSV { line1 line2} {
+	set results [list]
+	puts "Actual Length: [llength [split $line1 ,]] ,Expected Length: [llength [split $line2 ,]]"
+	
+	foreach {var1} [split $line1 ,] {var2} [split $line2 ,] {
+		if { $var1 != $var2 } {
+			puts "{$var1} :: {$var2}"
+		}
+	}
+}
+
+proc testComparison {} {
+	set data1 {fld1,"fld2.1, fld2.2",fld3,"fld4.1,fld4.2,fld4.3",fld5,fld6}
+	set data2 {fld1,"fld2.3, fld2.2",fld3,"fld4.1,fld4.2,fld4.3",fld5}
+	compareCSV [splitCSVDataWithCommas $data1] [splitCSVDataWithCommas $data2]
+}
+
+proc main {} {
+	# Open the file
+	# Record first CSV line as actual
+	# Record second CSV line as expected
+	# Compare actual vs expected after preprocessing them for comma in data
+
+	set datafile [getstr {DATA} {data.txt}]
+	
+	 if { ! [file exists $datafile] } {
+		puts "data.txt does not exists. If you are using a different file for input data, please specify by setting {MKVDATA}"
+		return
+	 }
+	 
+	
+	# Slurp up the data file
+     set fp [open $datafile r]
+     set file_data [read $fp]
+     close $fp
+
+     # Process data file
+     set data [split $file_data "\n"]
+	 set linelist [list]
+     foreach line $data {
+          # do some line processing here
+		  if {  [regexp {,} $line] } { 
+			lappend linelist $line
+		  }
+     }	 
+	 
+	 if { [llength $linelist] == 2 } {
+		compareCSV [splitCSVDataWithCommas [lindex $linelist 0]] [splitCSVDataWithCommas [lindex $linelist 1]]
+	 
+	 } else {
+		puts "There are [llength $linelist] csv data lines in file, only 2 lines expected"
+	 }
+
+}
+
+main
