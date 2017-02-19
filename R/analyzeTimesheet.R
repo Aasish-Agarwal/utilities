@@ -29,6 +29,12 @@ mdata2 <- mdata1 %>%
     summarize(count = n()) %>%
       mutate( growth = cumsum(count))
 
+exercise_map <- dcast(mdata1, variable ~ Email.Address, value.var = "mindate")
+gap_reportbook <- gs_title("Pair Programming ITS")
+gs_edit_cells( gap_reportbook, ws = "Coverage", input = exercise_map)
+
+
+gs_edit_cells( gap_reportbook, ws = "Progress", input = mdata2)
 
 
 ## Code tested with
