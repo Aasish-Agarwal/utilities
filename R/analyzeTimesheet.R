@@ -8,10 +8,11 @@ library(ggthemes)
 
 gs_gap()
 gap <- gs_title("KnR - Coverage")
-data <- gap %>% gs_read(ws = "Form Responses 1", range = cell_cols(1:91), col_names=TRUE)
+data <- gs_read(gap, ws = "Form Responses 1", range = cell_cols(1:91), col_names=TRUE)
 
 
-mdata <- melt(data, id=c("Timestamp","Email.Address"))
+mdata <- melt(data, id=c("Timestamp","Email Address"))
+colnames(mdata)[2] <- "Email.Address"
 
 mdata1 <- mdata %>% 
   filter( value == "Yes" ) %>%
