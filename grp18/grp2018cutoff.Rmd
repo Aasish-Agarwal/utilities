@@ -18,71 +18,111 @@ library(dplyr)
 
 g_data_root <- "."
 g_geresults_folder <- "rawresults"
-
-## Range Version 1
-g_tech_cut_l1 <- 40
-g_tech_cut_l2 <- 50
-g_tech_cut_l3 <- 25
-g_tech_cut_l4 <- 100
-
-g_apti_cut_l1 <- 75
-g_apti_cut_l2 <- 50
-g_apti_cut_l3 <- 85
-g_apti_cut_l4 <- 95
-
-
-## Range Version 2
-###  DEV
-g_tech_cut_l1 <- 35
-g_apti_cut_l1 <- 75
-
-g_tech_cut_l2 <- 50
-g_apti_cut_l2 <- 50
-
-### CS
-g_tech_cut_l3 <- 15
-g_apti_cut_l3 <- 85
-
-g_tech_cut_l4 <- 100
-g_apti_cut_l4 <- 95
-
 g_max_marks_apti <- 40
-g_programming_pct_to_use <- 22.8571
 
-  heresultspath = paste( g_data_root , g_geresults_folder , sep = "/")
-  files <- list.files(path=heresultspath, pattern="*.xls", full.names=T, recursive=FALSE)
-  
-  cutoff_list <- do.call(rbind,lapply(files, function(x) {
+create_master_data_set <- function(x) 
+{
       res <- read.xlsx(x,1)
       
       v1 <- res %>% select(Name, Email, Institute, CGPA.Percentage, Phone.Number, Degree, Report.Access.URL, Programming..350.0. , Technical.Dev.Medium, Technical.Dev.Easy, Technical.Dev.C...Easy , Aptitude.Medium, Aptitude.Easy)
       
       names(v1) <- c("name", "email" ,  "institute" , "cgpa" , "phone" , "degree" , "url" , "programming"  , "techmed" , "techeasy" , "techcpp" , "aptmed" , "apteasy")
+  
+
+      v2 <- v1 %>% mutate (filename = basename(x)) 
       
-      v2 <- v1 %>% mutate ( programming = as.numeric(levels(programming))[programming] , 
+
+      return(v2)  
+  
+}
+
+
+allocation_strategy_b <- function(input_data_set) 
+  {
+
+    g_programming_pct_to_use <- 22.8571
+    
+      v2 <- input_data_set %>% mutate ( programming = as.numeric(levels(programming))[programming] , 
                             aptmed = as.numeric(levels(aptmed))[aptmed],
                             apteasy = as.numeric(levels(apteasy))[apteasy],
                             techmed = as.numeric(levels(techmed))[techmed],
                             techeasy = as.numeric(levels(techeasy))[techeasy],
                             techcpp = as.numeric(levels(techcpp))[techcpp] ,
-                            techpct = (programming * g_programming_pct_to_use / 100 ) + techmed + techeasy + techcpp,
-                            apctpct = (apteasy + aptmed) * 100 / g_max_marks_apti ,
-                            techaptpct = (techmed +techeasy ) * 100 / 15,  
-                            allocation = ifelse ( (programming >=200 ) | (apctpct >= g_apti_cut_l1 & techpct >= g_tech_cut_l1) | (apctpct >= g_apti_cut_l2 & techpct >= g_tech_cut_l2) , "Dev" , 
-                                                  ifelse ( apctpct >= 85 & techaptpct >= 80 , "CS" , "No")
+                            TechMcq = techmed + techeasy + techcpp,
+                            Aptitude = apteasy + aptmed, 
+                            AptitudePct = Aptitude * 100 / g_max_marks_apti ,
+                            TechPct = (programming * g_programming_pct_to_use) / 100 +  techmed + techeasy + techcpp,
+                            CSTechAptitudePct = round((techmed +techeasy ) * 100 / 15),  
+                            categoryDev1 = ifelse(programming >=200 , 1 , 0),
+                            categoryDev2 = ifelse((AptitudePct >=75 & TechPct >= 35) , 1 , 0),
+                            categoryDev3 = ifelse((AptitudePct >=50 & TechPct >= 50) , 1 , 0),
+                            categoryDev4 = 'NA',
+                            allocationCS = ifelse ( AptitudePct >= 85 & CSTechAptitudePct >= 80 , 1 , 0),
+                            allocationDev = ifelse ( (categoryDev1 + categoryDev2 + categoryDev3 ) > 0  , 1 , 0),
+                            allocation = ifelse ( allocationDev > 0  , "Dev" , 
+                                                  ifelse ( allocationCS > 0 , "CS" , "No")
                                                   ),
-                            filename = basename(x)
+                            strategy = "Strategy B"
                             ) 
+                            
 
       v3 <- v2 %>% mutate( allocation = ifelse( allocation == "CS" , 
 			ifelse( grepl('_igdtuw_|_mait_', filename), "CS", "No"),
-			allocation)) 
+			allocation))  %>% select (name, email ,  institute , cgpa , phone , degree , url , programming  , techmed , techeasy , techcpp , aptmed , apteasy , TechMcq, Aptitude , CSTechAptitudePct, allocation , filename ,categoryDev1 , categoryDev2, categoryDev3, categoryDev4, allocationDev,  allocationCS , strategy, TechPct) 
 
       
-            return(v3)
-  }))
+      return(v3)
+  }
 
-output_file <- format(Sys.time(), "cutoff_list-%Y%m%d-%H%M%S.csv")
+
+
+allocation_strategy_c <- function(input_data_set) 
+  {
+
+      v2 <- input_data_set %>% mutate ( programming = as.numeric(levels(programming))[programming] , 
+                            aptmed = as.numeric(levels(aptmed))[aptmed],
+                            apteasy = as.numeric(levels(apteasy))[apteasy],
+                            techmed = as.numeric(levels(techmed))[techmed],
+                            techeasy = as.numeric(levels(techeasy))[techeasy],
+                            techcpp = as.numeric(levels(techcpp))[techcpp] ,
+                            TechMcq = techmed + techeasy + techcpp,
+                            Aptitude = apteasy + aptmed, 
+                            AptitudePct = Aptitude * 100 / g_max_marks_apti ,
+                            CSTechAptitudePct = round((techmed +techeasy ) * 100 / 15),  
+                            categoryDev1 = ifelse(programming >=200 , 1 , 0),
+                            categoryDev2 = ifelse((programming >=120 & Aptitude >= 20 & TechMcq >= 8) , 1 , 0),
+                            categoryDev3 = ifelse((programming >=100 & Aptitude >= 35 & TechMcq >= 10) , 1 , 0),
+                            categoryDev4 = ifelse((programming >=100 & Aptitude >= 30 & TechMcq >= 15) , 1 , 0),
+                            allocationCS = ifelse ( AptitudePct >= 85 & CSTechAptitudePct >= 80 , 1 , 0),
+                            allocationDev = ifelse ( (categoryDev1 + categoryDev2 + categoryDev3 + categoryDev4) > 0  , 1 , 0),
+                            allocation = ifelse ( allocationDev > 0  , "Dev" , 
+                                                  ifelse ( allocationCS > 0 , "CS" , "No")
+                                                  ),
+                            strategy = "Strategy C"
+                            ) 
+                            
+
+      v3 <- v2 %>% mutate( allocation = ifelse( allocation == "CS" , 
+			ifelse( grepl('_igdtuw_|_mait_', filename), "CS", "No"),
+			allocation))  %>% select (name, email ,  institute , cgpa , phone , degree , url , programming  , techmed , techeasy , techcpp , aptmed , apteasy , TechMcq, Aptitude , CSTechAptitudePct, allocation , filename ,categoryDev1 , categoryDev2, categoryDev3, categoryDev4, allocationDev,  allocationCS , strategy) 
+
+      
+      return(v3)
+  }
+
+heresultspath = paste( g_data_root , g_geresults_folder , sep = "/")
+files <- list.files(path=heresultspath, pattern="*.xls", full.names=T, recursive=FALSE)  
+
+master_data_set <- do.call(rbind,lapply(files, create_master_data_set ))
+output_file <- format(Sys.time(), "master-list-%Y%m%d-%H%M%S.csv")
+write.table(master_data_set, output_file, sep="," , row.names = F)
+
+cutoff_list <- allocation_strategy_c(master_data_set)
+output_file <- format(Sys.time(), "cutoff_list_strategy-C--%Y%m%d-%H%M%S.csv")
+write.table(cutoff_list, output_file, sep="," , row.names = F)
+
+cutoff_list <- allocation_strategy_b(master_data_set)
+output_file <- format(Sys.time(), "cutoff_list_strategy-B--%Y%m%d-%H%M%S.csv")
 write.table(cutoff_list, output_file, sep="," , row.names = F)
 
 ```
