@@ -12,9 +12,10 @@ knitr::opts_chunk$set(echo = TRUE)
 ## ResultSet
 
 
-```{r cars}
-library(xlsx)
-library(dplyr)
+```{r ,echo=FALSE, results="asis"}
+suppressWarnings(library(xlsx, quietly = TRUE, warn.conflicts = FALSE ))
+suppressWarnings(library(dplyr, quietly = TRUE, warn.conflicts = FALSE))
+suppressWarnings(library(knitr, quietly = TRUE, warn.conflicts = FALSE))
 
 g_data_root <- "."
 g_geresults_folder <- "rawresults"
@@ -110,20 +111,35 @@ allocation_strategy_c <- function(input_data_set)
       return(v3)
   }
 
+
 heresultspath = paste( g_data_root , g_geresults_folder , sep = "/")
-files <- list.files(path=heresultspath, pattern="*.xls", full.names=T, recursive=FALSE)  
+files <- list.files(path=heresultspath, pattern="*.xls", full.names=T, recursive=FALSE)
+  
 
 master_data_set <- do.call(rbind,lapply(files, create_master_data_set ))
-output_file <- format(Sys.time(), "master-list-%Y%m%d-%H%M%S.csv")
-write.table(master_data_set, output_file, sep="," , row.names = F)
+#output_file <- format(Sys.time(), "master-list-%Y%m%d-%H%M%S.csv")
+#write.table(master_data_set, output_file, sep="," , row.names = F)
+
 
 cutoff_list <- allocation_strategy_c(master_data_set)
 output_file <- format(Sys.time(), "cutoff_list_strategy-C--%Y%m%d-%H%M%S.csv")
 write.table(cutoff_list, output_file, sep="," , row.names = F)
 
-cutoff_list <- allocation_strategy_b(master_data_set)
-output_file <- format(Sys.time(), "cutoff_list_strategy-B--%Y%m%d-%H%M%S.csv")
-write.table(cutoff_list, output_file, sep="," , row.names = F)
+to_display <- cutoff_list %>% filter (allocation != 'No') %>% select (name, email ,  institute , cgpa , phone , degree,programming, TechMcq, Aptitude , allocation)
+
+if ( nrow(to_display) > 0 ) {
+  print(paste("## Exported Results as CSV: ", output_file))
+  
+  kable(to_display)
+  
+} else {
+g_data_root <- "."
+g_geresults_folder <- "rawresults"
+
+    print(paste("You need to place raw results file in folder: ", g_data_root , "/" , "g_geresults_folder"))
+  
+}
+
 
 ```
 
