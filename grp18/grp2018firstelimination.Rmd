@@ -1,0 +1,61 @@
+---
+title: "GRP 2018 First Elimination"
+author: "Aashish"
+date: "7 September 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## ResultSet
+
+
+```{r ,echo=FALSE, results="asis"}
+suppressWarnings(library(xlsx, quietly = TRUE, warn.conflicts = FALSE ))
+suppressWarnings(library(dplyr, quietly = TRUE, warn.conflicts = FALSE))
+suppressWarnings(library(knitr, quietly = TRUE, warn.conflicts = FALSE))
+
+
+create_master_data_set <- function(x) 
+{
+      res1 <- read.xlsx(x,1,  startRow = 2, endRow = 12)
+      return(res1)  
+}
+
+readrefdata <- function(x) 
+{
+      res1 <- read.xlsx(x,1)
+      return(res1)  
+}
+
+heresultspath = "./16-sep/feedback/"
+files <- list.files(path=heresultspath, pattern="*.xlsx", full.names=T, recursive=FALSE)
+  
+master_data_set <- do.call(rbind,lapply(files, create_master_data_set ))
+names(master_data_set) <- c("Panel" , "Email" , "Name" , "Priority" , "College", "TeamPlayer" , "GroupCommunication"  , "ProblemSolving" , "F2FCommunication" , "Programming" , "Notes" , "Recommendation")
+
+master_data_set <- master_data_set %>% select (Panel , Email , Name , Priority , College, TeamPlayer , GroupCommunication  , ProblemSolving , F2FCommunication , Programming , Notes , Recommendation)
+files <- list.files(path="./16-sep/ref/", pattern="*.xlsx", full.names=T, recursive=FALSE)
+
+ref_data_set <- do.call(rbind,lapply(files, readrefdata ))
+names(ref_data_set) <- c("Panel", "College" , "Location" , "Name" ,   "Email" , "ProgrammingAtCollege" , "TechMCQ" , "Aptitude")
+refdata_to_merge <- ref_data_set %>% select (Email , ProgrammingAtCollege , TechMCQ , Aptitude) 
+
+report_df <- merge(master_data_set, refdata_to_merge, by="Email", all.x=TRUE) 
+
+report_df <- report_df %>% mutate(
+    aggregated_score = TeamPlayer * (10/100) + 
+      GroupCommunication * (10/100) + 
+      ProblemSolving * (40/100) + 
+      F2FCommunication * (20/100) + 
+      Programming * (3/100) * (20/100)
+)
+
+output_file <- format(Sys.time(), "DEV-Aggregated_Score-%Y%m%d-%H%M%S.csv")
+write.table(report_df, output_file, sep="," , row.names = F)
+
+
+```
+
