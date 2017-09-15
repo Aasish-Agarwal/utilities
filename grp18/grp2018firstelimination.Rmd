@@ -27,7 +27,13 @@ create_master_data_set <- function(x)
 readrefdata <- function(x) 
 {
       res1 <- read.xlsx(x,1)
-      return(res1)  
+      res2 <- read.xlsx(x,2)
+      
+      names(res2) <- c("Panel" , "Member1", "Member2" , "Member3")
+      res2 <- res2 %>% select(Panel, Member1)
+      refdata <- merge(res1, res2, by="Panel", all.x=TRUE) 
+      
+      return(refdata)  
 }
 
 # Load evaluation results
@@ -43,8 +49,10 @@ master_data_set <- master_data_set %>% select (Panel , Email , Name , Priority ,
 # Load reference data
 files <- list.files(path="./reference/", pattern="*.xlsx", full.names=T, recursive=FALSE)
 ref_data_set <- do.call(rbind,lapply(files, readrefdata ))
-names(ref_data_set) <- c("Panel", "College" , "Location" , "Name" ,   "Email" , "ProgrammingAtCollege" , "TechMCQ" , "Aptitude")
-refdata_to_merge <- ref_data_set %>% select (Email , ProgrammingAtCollege , TechMCQ , Aptitude)
+
+kable(ref_data_set)
+names(ref_data_set) <- c("Panel", "College" , "Location" , "Name" ,   "Email" , "ProgrammingAtCollege" , "TechMCQ" , "Aptitude" , "Member1")
+refdata_to_merge <- ref_data_set %>% select (Email , ProgrammingAtCollege , TechMCQ , Aptitude , Member1)
 
 
 
@@ -60,14 +68,13 @@ report_df <- report_df %>% mutate(
 )
 
 report_df <- report_df %>% select(Name,College,TeamPlayer,GroupCommunication,ProblemSolving,F2FCommunication,
-Programming,Recommendation,aggregated_score,Panel,ProgrammingAtCollege,TechMCQ,Aptitude,Notes,Priority,Email
+Programming,Recommendation,aggregated_score,Panel,Member1,ProgrammingAtCollege,TechMCQ,Aptitude,Notes,Priority,Email
 )
 
 
 
 output_file <- format(Sys.time(), "DEV-Aggregated_Score-%Y%m%d-%H%M%S.csv")
 write.table(report_df, output_file, sep="," , row.names = F)
-
 
 ```
 
