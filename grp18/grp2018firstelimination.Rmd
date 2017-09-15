@@ -30,28 +30,40 @@ readrefdata <- function(x)
       return(res1)  
 }
 
-heresultspath = "./16-sep/feedback/"
+# Load evaluation results
+heresultspath = "./feedback/"
 files <- list.files(path=heresultspath, pattern="*.xlsx", full.names=T, recursive=FALSE)
   
 master_data_set <- do.call(rbind,lapply(files, create_master_data_set ))
 names(master_data_set) <- c("Panel" , "Email" , "Name" , "Priority" , "College", "TeamPlayer" , "GroupCommunication"  , "ProblemSolving" , "F2FCommunication" , "Programming" , "Notes" , "Recommendation")
 
 master_data_set <- master_data_set %>% select (Panel , Email , Name , Priority , College, TeamPlayer , GroupCommunication  , ProblemSolving , F2FCommunication , Programming , Notes , Recommendation)
-files <- list.files(path="./16-sep/ref/", pattern="*.xlsx", full.names=T, recursive=FALSE)
 
+
+# Load reference data
+files <- list.files(path="./reference/", pattern="*.xlsx", full.names=T, recursive=FALSE)
 ref_data_set <- do.call(rbind,lapply(files, readrefdata ))
 names(ref_data_set) <- c("Panel", "College" , "Location" , "Name" ,   "Email" , "ProgrammingAtCollege" , "TechMCQ" , "Aptitude")
-refdata_to_merge <- ref_data_set %>% select (Email , ProgrammingAtCollege , TechMCQ , Aptitude) 
+refdata_to_merge <- ref_data_set %>% select (Email , ProgrammingAtCollege , TechMCQ , Aptitude)
+
+
+
 
 report_df <- merge(master_data_set, refdata_to_merge, by="Email", all.x=TRUE) 
 
 report_df <- report_df %>% mutate(
-    aggregated_score = TeamPlayer * (10/100) + 
+    aggregated_score = round( TeamPlayer * (10/100) + 
       GroupCommunication * (10/100) + 
       ProblemSolving * (40/100) + 
       F2FCommunication * (20/100) + 
-      Programming * (3/100) * (20/100)
+      Programming * (3/100) * (20/100), 1)
 )
+
+report_df <- report_df %>% select(Name,College,TeamPlayer,GroupCommunication,ProblemSolving,F2FCommunication,
+Programming,Recommendation,aggregated_score,Panel,ProgrammingAtCollege,TechMCQ,Aptitude,Notes,Priority,Email
+)
+
+
 
 output_file <- format(Sys.time(), "DEV-Aggregated_Score-%Y%m%d-%H%M%S.csv")
 write.table(report_df, output_file, sep="," , row.names = F)
