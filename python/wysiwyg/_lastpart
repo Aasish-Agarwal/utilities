@@ -1,0 +1,44 @@
+  <script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+  
+	$('#summernote').summernote('disable');
+  });
+
+  </script>
+
+<button onclick="editPage()">Edit Page</button>
+
+<button onclick="saveChanges()">Save Changes</button>
+
+
+<button onclick="cancelChanges()">Cancel Changes</button>
+
+<script>
+function editPage() {
+$('#summernote').summernote('enable');
+}
+
+function cancelChanges() {
+	var docid = document.getElementById("docid").getAttribute("val");
+	window.location = "/" + docid;
+}
+
+function saveChanges() { 
+	$('#summernote').summernote('disable');
+	var markupStr = $('#summernote').summernote('code');
+	var docid = document.getElementById("docid").getAttribute("val");
+
+	$.post("/",
+		docid + "\n"+markupStr,
+			function(data,status){
+				window.location = "/" + docid;
+			});
+
+}
+</script>
+
+
+</body>
+</html>
+
