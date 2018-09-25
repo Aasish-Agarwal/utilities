@@ -70,5 +70,5 @@ class MyHandler(SimpleHTTPRequestHandler):
         #self.wfile.write(body)
 
 if __name__ == '__main__':
-    httpd = HTTPServer(('127.0.0.1', 8000), MyHandler)
+    httpd = HTTPServer(('', 8000), MyHandler)
     httpd.serve_forever()
