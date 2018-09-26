@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <title>
+   Summernote
+  </title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js">
+  </script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js">
+  </script>
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js">
+  </script>
+ </head>
+ <body>
+  <div class="actionpane" id="actionbuttons">
+   <p>
+   </p>
+   <button type="button" class="btn btn-primary btn-sm" onclick="editPage()">
+    Edit Page
+   </button>
+   <button type="button" class="btn btn-primary btn-sm" onclick="saveChanges()">
+    Save Changes
+   </button>
+   <button type="button" class="btn btn-primary btn-sm" onclick="cancelChanges()">
+    Cancel Changes
+   </button>
+  </div>
+  <p>
+  </p>
+  <div id="docid" val="template.html">
+  </div>
+  <div id="summernote">
+   <p>
+   </p>
+   <h4 style='font-size: 1.2em; color: rgb(0, 0, 0); font-family: "Times New Roman";'>
+   </h4>
+   <div class="section" id="editing-test-data" style='font-family: "Times New Roman"; font-size: medium;'>
+    <h5 style="font-size: 1em;">
+    </h5>
+    <h3>
+     Business Context &amp; Acceptance Tests
+    </h3>
+    <table border="1" class="example docutils" style="margin: 5px 20px; border: 1px solid rgb(128, 128, 128);">
+     <thead valign="bottom">
+      <tr>
+       <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+        Test Case
+       </th>
+       <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+        Action
+       </th>
+       <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+        Argument
+       </th>
+       <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+        Argument
+       </th>
+      </tr>
+     </thead>
+     <tbody valign="top">
+      <tr>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        My Test
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        [Documentation]
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Example test
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+      </tr>
+      <tr>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Log
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        ${MESSAGE}
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+      </tr>
+      <tr>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        My Keyword
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Input to user keyword
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+      </tr>
+      <tr>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        &nbsp;
+       </td>
+      </tr>
+      <tr>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Another Test
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Should Be Equal
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        ${MESSAGE}
+       </td>
+       <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+        Hello, world!
+       </td>
+      </tr>
+     </tbody>
+    </table>
+    <p style="font-size: 1em;">
+     <br />
+    </p>
+    <div id="developer_area">
+     <hr style="color:blue;" />
+     <h4>
+      Developer Area
+     </h4>
+     <h5 style="font-size: 1em;">
+      <table border="1" class="example docutils" style="margin: 5px 20px; border: 1px solid rgb(128, 128, 128); font-size: medium;">
+       <thead valign="bottom">
+        <tr>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Setting
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+        </tr>
+       </thead>
+       <tbody valign="top">
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          Library
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          OperatingSystem
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </h5>
+     <h5 style="font-size: 1em;">
+      <table border="1" class="example docutils" style="margin: 5px 20px; border: 1px solid rgb(128, 128, 128); font-size: medium;">
+       <thead valign="bottom">
+        <tr>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Keyword
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Action
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Argument
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Argument
+         </th>
+        </tr>
+       </thead>
+       <tbody valign="top">
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          My Keyword
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          [Arguments]
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          ${path}
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          Log
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          ${path}
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </h5>
+     <h5 style="font-size: 1em;">
+      <table border="1" class="example docutils" style="margin: 5px 20px; border: 1px solid rgb(128, 128, 128); font-size: medium;">
+       <thead valign="bottom">
+        <tr>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Variable
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+         <th class="head" style="padding: 0.1em 1em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em; background: rgb(224, 224, 224);">
+          Value
+         </th>
+        </tr>
+       </thead>
+       <tbody valign="top">
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          ${MESSAGE}
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          Hello, world!
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+        <tr>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+         <td style="padding: 0.1em 1em 0.1em 0.3em; vertical-align: top; border: 1px solid rgb(128, 128, 128); font-family: arial, helvetica, sans-serif; height: 1.2em; font-size: 0.8em;">
+          &nbsp;
+         </td>
+        </tr>
+       </tbody>
+      </table>
+     </h5>
+    </div>
+    <p>
+    </p>
+    <p>
+     <br />
+    </p>
+   </div>
+  </div>
+  <div class="actionpane" id="actionbuttons-bottom">
+   <p>
+   </p>
+   <button type="button" class="btn btn-primary btn-sm" onclick="editPage()">
+    Edit Page
+   </button>
+   <button type="button" class="btn btn-primary btn-sm" onclick="saveChanges()">
+    Save Changes
+   </button>
+   <button type="button" class="btn btn-primary btn-sm" onclick="cancelChanges()">
+    Cancel Changes
+   </button>
+   <br />
+   <h4>
+    Create New File
+   </h4>
+   <p>
+    If you need to create a file myfile.html under folder foo/bar specify: foo/bar/myfile.html
+   </p>
+   <p>
+    <button type="button" class="btn btn-primary btn-sm" onclick="createFile()">
+     Create
+    </button>
+    <input type="text" id="filetocreate" value="" />
+   </p>
+  </div>
+  <script>
+   $(document).ready(function() {
+	$('#summernote').summernote();
+	$('#summernote').summernote('disable');
+});
+
+function editPage() {
+	$('#summernote').summernote('enable');
+}
+
+function cancelChanges() {
+	var docid = document.getElementById("docid").getAttribute("val");
+	window.location = "/" + docid;
+}
+
+function createFile() {
+	var markupStr = "&lt;h1&gt;Your Content Here&lt;/h1&gt;";
+	var docid = document.getElementById("filetocreate").value;
+	document.getElementById("filetocreate").value = "";
+
+	$.post("/",
+		docid + "\n"+markupStr,
+			function(data,status){
+				window.location = "/" + docid;
+			});
+
+}
+
+function saveChanges() { 
+	$('#summernote').summernote('disable');
+	var markupStr = $('#summernote').summernote('code');
+	var docid = document.getElementById("docid").getAttribute("val");
+
+	$.post("/",
+		docid + "\n"+markupStr,
+			function(data,status){
+				window.location = "/" + docid;
+			});
+
+}
+  </script>
+ </body>
+</html>

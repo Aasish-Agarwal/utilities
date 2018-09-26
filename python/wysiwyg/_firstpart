@@ -10,5 +10,12 @@
   <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 </head>
 <body>
+<div class="actionpane" id="actionbuttons">
+<p></p>
+<button type="button" class="btn btn-primary btn-sm" onclick="editPage()">Edit Page</button>
+<button type="button" class="btn btn-primary btn-sm" onclick="saveChanges()">Save Changes</button>
+<button type="button" class="btn btn-primary btn-sm" onclick="cancelChanges()">Cancel Changes</button>
+</div>
+<p></p>
 
 

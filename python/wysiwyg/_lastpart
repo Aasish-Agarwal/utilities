@@ -1,31 +1,25 @@
-<p></p>
+<div class="actionpane" id="actionbuttons-bottom">
+	<p></p>
+	<button type="button" class="btn btn-primary btn-sm" onclick="editPage()">Edit Page</button>
+	<button type="button" class="btn btn-primary btn-sm" onclick="saveChanges()">Save Changes</button>
+	<button type="button" class="btn btn-primary btn-sm" onclick="cancelChanges()">Cancel Changes</button>
+	<br>
+	<h4>Create New File</h4>
+	<p>If you need to create a file myfile.html under folder foo/bar specify: foo/bar/myfile.html<p>
+	<button type="button" class="btn btn-primary btn-sm" onclick="createFile()">Create</button>
+	<input type="text" id="filetocreate" value="">
 
-<button onclick="editPage()">Edit Page</button>
-
-<button onclick="saveChanges()">Save Changes</button>
-
-
-<button onclick="cancelChanges()">Cancel Changes</button>
-<br>
-<h4>Create New File</h4>
-<p>If you need to create a file myfile.html under folder foo/bar specify: foo/bar/myfile.html<p>
-<button onclick="createFile()">Create</button>
-<input type="text" id="filetocreate" value="">
-
-  <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-  
-	$('#summernote').summernote('disable');
-  });
-
-  </script>
-
-
+</div>
 
 <script>
+
+$(document).ready(function() {
+	$('#summernote').summernote();
+	$('#summernote').summernote('disable');
+});
+
 function editPage() {
-$('#summernote').summernote('enable');
+	$('#summernote').summernote('enable');
 }
 
 function cancelChanges() {
@@ -37,6 +31,7 @@ function createFile() {
 	var markupStr = "<h1>Your Content Here</h1>";
 	var docid = document.getElementById("filetocreate").value;
 	document.getElementById("filetocreate").value = "";
+//content-type: text/xml
 
 	$.post("/",
 		docid + "\n"+markupStr,
