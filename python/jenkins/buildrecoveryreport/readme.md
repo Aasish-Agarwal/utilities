@@ -1,7 +1,7 @@
-#Jenkins Build Report Analysis
+# Jenkins Build Report Analysis
 Use this tool to find how much does it take for you to recover from the failed builds
 
-#Steps to use
+# Steps to use
 
 ## Download build deails xml file
 https://<jenkins installation>/job/<jobname>/rssAll
@@ -11,7 +11,7 @@ https://<jenkins installation>/job/<jobname>/rssAll
 ## use following command to get the statistics
 python analyzebuilds.py [build history xml file]
 
-#Expected output
+# Expected output
 
 you must see something similar to this on your screen
 
@@ -21,5 +21,5 @@ Failed In,Recovered In,Failed Time,Recovered Time,Delay in Munutes
 1612,1613,2019-08-06T12:00:00Z,2019-08-06T12:58:01Z,58
 1600,1603,2019-08-02T14:00:00Z,2019-08-05T05:33:15Z,3813
 
-#Prerequisite
+# Prerequisite
 Python 3.7+
