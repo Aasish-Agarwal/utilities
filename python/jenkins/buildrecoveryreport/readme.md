@@ -3,13 +3,15 @@ Use this tool to find how much does it take for you to recover from the failed b
 
 # Steps to use
 
-## Download build deails xml file
-https://\<jenkins installation\>/job/\<jobname\>/rssAll
+* Download build deails xml file
 
-## save xml to disk
+* https://\<jenkins installation\>/job/\<jobname\>/rssAll
 
-## use following command to get the statistics
-python analyzebuilds.py [build history xml file]
+* save xml to disk
+
+* use following command to get the statistics
+
+* python analyzebuilds.py [build history xml file]
 
 # Expected output
 
