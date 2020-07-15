@@ -1,4 +1,4 @@
-# utilities
+# Utilities
 general purpose applications used day to day
 
 # python/collate_member_data
