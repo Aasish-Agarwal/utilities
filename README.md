@@ -1,4 +1,6 @@
 # utilities
 general purpose applications used day to day
 
-This is readme
+# python/collate_member_data
+Read multiple xls files to consolidate effort distribution data
+
