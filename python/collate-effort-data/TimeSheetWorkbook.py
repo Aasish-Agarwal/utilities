@@ -41,28 +41,6 @@ class TimeSheetWorkbook:
     def __MeltMemberData(self, sheetName ):
         ws = self.wb[sheetName]
         #Loop for the number of days
-        categories = {}
-        categories['Automation'] = 'Innovation'
-        categories['Billable'] = 'Innovation'
-        categories['Compliance'] = 'Innovation'
-        categories['Cust Escalation'] = 'Innovation'
-        categories['DevOps Mgmt.'] = 'Innovation'
-        categories['Functional Testing'] = 'Innovation'
-        categories['Inst Mgmt.'] = 'Mainteance'
-        categories['L & D'] = 'Mainteance'
-        categories['Leaves'] = 'Mainteance'
-        categories['MIS'] = 'Mainteance'
-        categories['Others'] = 'Mainteance'
-        categories['Paid FE'] = 'Mainteance'
-        categories['Pref Mgmt.'] = 'Mainteance'
-        categories['R & D'] = 'Billable'
-        categories['Recon Mgmt.'] = 'Billable'
-        categories['Release Mgmt.'] = 'Billable'
-        categories['Roadmap FE'] = 'Billable'
-        categories['Scrum/Kanban Meetings'] = 'Billable'
-        categories['Stop & Fix'] = 'Keeping Lights On'
-        categories['Tools'] = 'Keeping Lights On'
-        categories['Upgrade Support'] = 'Keeping Lights On'
         
         for colindex in range(self.gIterationLength):
             column = self.gITERATION_HEADER_COUNT + colindex
@@ -70,10 +48,9 @@ class TimeSheetWorkbook:
             nActivities = len(self.gActivityList)
             for rowindex in range(nActivities):
                 activity = self.gActivityList[rowindex]
-                category = categories[activity]
                 val = ws.cell(2+rowindex,column).value
                 if val:
-                    self.gMeltedData.append({'WorkStream': self.gWork_stream, 'Iteration': self.gIteration_number, 'Member':sheetName ,'Day':day, 'Category': category, 'Activity':activity,'Effort':val})
+                    self.gMeltedData.append({'WorkStream': self.gWork_stream, 'Iteration': self.gIteration_number, 'Member':sheetName ,'Day':day,  'Activity':activity,'Effort':val})
             
     def GetMeltedData(self):
         self.gMeltedData = []
@@ -82,6 +59,4 @@ class TimeSheetWorkbook:
             self.__MeltMemberData( self.gMemberList[memberId] )
         return(self.gMeltedData)
 
-
-#exec(open('TimeSheetWokbook.py').read())
 
