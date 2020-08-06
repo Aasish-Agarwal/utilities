@@ -1,6 +1,7 @@
 # Utilities
 general purpose applications used day to day
 
-# python/collate_member_data
-Read multiple xls files to consolidate effort distribution data
+# EffortDistributionAnalysis
+End to end solution to record effort distribution data and generate management reports
+Configurable and adaptable to suit the specific organization needs
 
