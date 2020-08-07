@@ -117,7 +117,7 @@ class EffortsDataProcessor:
         innovation_df['Category'] = 'Product Innovation'
         maintenance_df['Category'] = 'Product Maintenance & Support'
     
-        self.base_df = pd.concat([non_scrum_kanban_df, innovation_df,maintenance_df], ignore_index=True)
+        self.base_df = pd.concat([non_scrum_kanban_df, innovation_df,maintenance_df], ignore_index=True, sort=False)
 
 
     def GetData(self):

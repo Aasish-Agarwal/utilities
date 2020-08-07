@@ -2,6 +2,8 @@ import sys
 
 from openpyxl import Workbook
 from openpyxl import load_workbook
+from datetime import datetime  
+from datetime import timedelta  
 
 class TimeSheetWorkbook:
 
@@ -12,6 +14,7 @@ class TimeSheetWorkbook:
         self.gIterationLength = self.__GetNamedCell('iteration_length')
         self.gIteration_number = self.__GetNamedCell('iteration_number')
         self.gWork_stream = self.__GetNamedCell('work_stream')
+        self.gStartDate = self.__GetNamedCell('start_date')
         self.gITERATION_HEADER_COUNT = 4
         self.gMeltedData = []
 
@@ -44,7 +47,8 @@ class TimeSheetWorkbook:
         
         for colindex in range(self.gIterationLength):
             column = self.gITERATION_HEADER_COUNT + colindex
-            day = ws.cell(1,column).value
+            #day = ws.cell(1,column).value
+            day = self.gStartDate + timedelta(days=colindex)
             nActivities = len(self.gActivityList)
             for rowindex in range(nActivities):
                 activity = self.gActivityList[rowindex]
@@ -52,6 +56,7 @@ class TimeSheetWorkbook:
                 if val:
                     if type(val) != str:
                         self.gMeltedData.append({'WorkStream': self.gWork_stream, 'Iteration': self.gIteration_number, 'Member':sheetName ,'Day':day,  'Activity':activity,'Effort':val})
+                        #self.gMeltedData.append({'Team':team , 'WorkStream': workstream, 'Iteration': 1, 'Member': name, 'Day': self.gStartDate + timedelta(days=day), 'Activity':activity, 'Effort': effort})
             
     def GetMeltedData(self):
         self.gMeltedData = []
